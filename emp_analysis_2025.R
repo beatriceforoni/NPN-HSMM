@@ -61,8 +61,8 @@ summary(maxs)
 
 ###########################################################################################
 # Fit the model
-S_grid = c(2, 3, 4)
-# S_grid = c(2, 3, 4, 5, 6)
+# S_grid = c(2, 3, 4)
+S_grid = c(2, 3, 4, 5, 6)
 N = nrow(Y)
 P = ncol(Y)
 M = 30
@@ -137,10 +137,9 @@ for (s in 1:length(S_grid)) {
         tmp.llk[s, i, r] = as.numeric(tmp[[r]]$loglik)
       }
     }
-    # output.HSMM[[s]][[i]] = tmp[[which.max(tmp.llk)]]
+    output.HSMM[[s]][[i]] = tmp[[which.max(tmp.llk[s, i, ])]]
   }
 }
-
 
 llk.mat = array(NA, c(length(S_grid), length(grid), R))
 for (s in 1:length(S_grid)) {
@@ -158,6 +157,6 @@ apply(llk.mat, 1, mean)
 mean(llk.mat)
 # (max(tmp.llk) - tmp.llk)/max(tmp.llk) < 10^-3
 
-save.image(paste0("analisi_empirica_2025_M", M, "_R", R, "_v2.RData"))
+save.image(paste0("analisi_empirica_2025_M", M, "_R", R, ".RData"))
 # ! For GitHub
-# save.image(paste0("analisi_empirica_2025_M", M, "_R", R, "_rev_woMSCI.RData"))
+# save.image(paste0("analisi_empirica_2025_M", M, "_R", R, "_woMSCI.RData"))
